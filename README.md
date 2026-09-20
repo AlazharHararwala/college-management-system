@@ -307,7 +307,6 @@ AI was used as a development assistant to review code, help debug issues, sugges
 
 - CSS Styling (`style.css`) and CSS Class Names in the Templates
 - Code Review and Debugging Assistance
-- Password Hashing Implementation (guided changes and a one-time migration script)
 
 The purpose of using AI was to assist the development process, not to replace learning. I made sure to test and verify all AI-assisted code before including it in the final project.
 
