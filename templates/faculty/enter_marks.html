@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks Entry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="faculty">
+    <nav>
+        <a href="{{ url_for('faculty_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('view_marks' ) }}">View Marks</a>
+    </nav>
+
+    <h1>Marks Entry / Update</h1>
+
+    <form action="{{ url_for('update_marks') }}" method="POST">
+
+        <label>Class ID</label>
+        <select name="class_id" required>
+            {% for class_id in class_ids %}
+                <option value="{{ class_id }}">
+                    {{ class_id }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <label>Semester</label>
+        <input type="text" name="semester" required><br><br>
+
+        <label>Student ID</label>
+        <input type="text" name="student_id" required><br><br>
+
+        <label>Subject Name</label>
+        <input type="text" name="subject_name" required><br><br>
+
+        <label>Subject Code</label>
+        <input type="text" name="subject_code" required><br><br>
+
+        <label>MidSem Marks</label>
+        <input type="number" name="midsem_marks" min="0" max="20"><br><br>
+
+        <label>Internal Marks</label>
+        <input type="text" name="internal_marks" min="0" max="30"><br><br>
+
+        <label>EndSem Marks</label>
+        <input type="text" name="endsem_marks" min="0" max="50"><br><br>
+
+
+        <button type="submit" name="action" value="save">Save Marks</button>
+        <button type="reset">Reset</button>
+
+        <p>Note: Press reset button after saving the marks to enter another entry</p>
+
+    </form>
+
+
+</body>
+</html>
