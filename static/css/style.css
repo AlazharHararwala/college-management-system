@@ -1,0 +1,1933 @@
+/* ==========================================================================
+   CampusHub - Modern Minimal AI-Product Theme & Design System
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. Font Import: DM Sans (Google Fonts) with System Fallbacks
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. Design Tokens & CSS Variables
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors */
+  --bg: #f8f8fc;
+  --surface: #ffffff;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --text-light: #9ca3af;
+  --border: #e5e7eb;
+  --border-focus: #c7d2fe;
+
+  /* Accent (AI Purple Palette - Unified for All Roles) */
+  --accent: #6d5efc;
+  --accent-soft: #eeebff;
+  --accent-dark: #5646e0;
+  --accent-glow: rgba(109, 94, 252, 0.15);
+
+  /* Status Colors */
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --error-text: #b91c1c;
+  --success: #10b981;
+  --success-soft: #ecfdf5;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Elevation Shadows (Soft, Layered) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 25px -3px rgba(109, 94, 252, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03), 0 12px 32px -4px rgba(109, 94, 252, 0.06);
+  --shadow-hover: 0 14px 28px -4px rgba(109, 94, 252, 0.16), 0 8px 10px -4px rgba(0, 0, 0, 0.03);
+
+  /* Typography */
+  --font-stack: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --line-height-base: 1.6;
+}
+
+/* Unified role color: Student, Faculty, Admin all share the AI-purple accent */
+body.student,
+body.faculty,
+body.admin {
+  --primary: var(--accent);
+  --primary-hover: var(--accent-dark);
+}
+
+/* --------------------------------------------------------------------------
+   2. Base Reset & Typography
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-stack);
+  font-size: 16px;
+  line-height: var(--line-height-base);
+  color: var(--text-main);
+  background-color: var(--bg);
+  background-image: radial-gradient(circle at 50% -120px, rgba(109, 94, 252, 0.12) 0%, rgba(238, 235, 255, 0.35) 40%, transparent 70%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+/* Inner pages: Framed white rounded card on airy background */
+body:not(.landing) {
+  max-width: 1340px;
+  width: min(100% - 48px, 1340px);
+  margin: 36px auto;
+  padding: 36px 40px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  animation: fadeInUp 0.4s ease-out;
+  overflow-x: auto;
+}
+
+/* Custom sleek scrollbar when pages have wide data tables */
+body:not(.landing)::-webkit-scrollbar {
+  height: 6px;
+}
+
+body:not(.landing)::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: var(--radius-full);
+}
+
+body:not(.landing)::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: var(--radius-full);
+}
+
+body:not(.landing)::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Headings with tight letter-spacing */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.55rem; }
+h3 { font-size: 1.25rem; font-weight: 600; }
+h4 { font-size: 1.05rem; font-weight: 600; color: var(--text-muted); }
+
+p {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+a:hover {
+  color: var(--accent-dark);
+}
+
+/* Global entry fade-in for pages */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Navigation (Translucent Sticky Pill Nav with Backdrop Blur)
+   -------------------------------------------------------------------------- */
+nav:not(.nav-links) {
+  position: sticky;
+  top: 16px;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  margin-bottom: 32px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+}
+
+nav:not(.nav-links) a {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+nav:not(.nav-links) a:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+
+nav:not(.nav-links) a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Logout link styled safely on the right */
+nav:not(.nav-links) a[href*="logout"] {
+  margin-left: auto;
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+nav:not(.nav-links) a[href*="logout"]:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* --------------------------------------------------------------------------
+   4. Tables (Rounded corners, Soft Purple Header, Zebra, Row Hover, Full 100% Stretch)
+   -------------------------------------------------------------------------- */
+table {
+  width: 100%;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border) !important;
+  margin: 20px 0 28px 0;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+th {
+  background: var(--accent-soft) !important;
+  color: var(--accent-dark) !important;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  font-size: 0.9rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Prevent awkward wrapping on IDs and date strings */
+td:first-child {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* Status / Radio Table Cells */
+td.status-cell,
+table td:has(input[type="radio"]) {
+  white-space: nowrap;
+}
+
+/* Allow description cells to wrap naturally */
+.desc-cell,
+td.desc-cell {
+  white-space: normal !important;
+  min-width: 200px;
+  max-width: 380px;
+  line-height: 1.5;
+}
+
+/* Override existing table border="2" attributes visually */
+table[border] {
+  border: 1px solid var(--border) !important;
+}
+
+table[border] th,
+table[border] td {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+/* Zebra row striping */
+tbody tr:nth-child(even) {
+  background-color: #fafafc;
+}
+
+/* Row hover highlight */
+tbody tr:hover {
+  background-color: rgba(109, 94, 252, 0.04);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Profile / Key-Value Tables (two-column layout only) */
+table.profile-table th {
+  width: 240px;
+  background: #fafafc !important;
+  color: var(--text-muted) !important;
+  text-transform: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: normal;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+table.profile-table td {
+  white-space: normal;
+}
+
+/* --------------------------------------------------------------------------
+   5. Forms & Inputs (44px Height, Purple Focus Ring, Modern Buttons)
+   -------------------------------------------------------------------------- */
+form {
+  margin: 20px 0;
+}
+
+/* Default block label for stacked form fields */
+form label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+form label:first-of-type {
+  margin-top: 0;
+}
+
+/* Inputs, Selects & Textareas: Proportional max-width, 44px height, clean spacing */
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="reset"]),
+select,
+textarea {
+  width: 100%;
+  max-width: 440px;
+  height: 44px;
+  padding: 0 14px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  box-sizing: border-box;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+/* Support time, date, number, etc. consistently */
+input[type="time"],
+input[type="date"] {
+  height: 44px;
+}
+
+textarea {
+  height: auto;
+  min-height: 96px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(109, 94, 252, 0.2);
+}
+
+/* Radio & Checkbox Inputs: Always inline and cleanly aligned */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--accent);
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  cursor: pointer;
+  margin: 0 4px 0 0;
+  display: inline-block;
+}
+
+/* Semantic colors for Attendance: Present (Green) vs Absent (Red) */
+input[type="radio"][value="present"] {
+  accent-color: #10b981;
+}
+
+input[type="radio"][value="absent"] {
+  accent-color: #ef4444;
+}
+
+/* Inline labels for Radio and Checkbox controls (never block) */
+form table td label,
+table td label,
+td.status-cell label,
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+  display: inline-flex !important;
+  align-items: center;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 4px !important;
+  margin-right: 18px !important;
+  padding: 0 !important;
+  font-weight: 500;
+  font-size: 0.92rem;
+  color: var(--text-main);
+  cursor: pointer;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+form table td label:hover,
+table td label:hover,
+td.status-cell label:hover,
+input[type="radio"] + label:hover,
+input[type="checkbox"] + label:hover {
+  color: var(--accent);
+}
+
+/* Inline Class Selection + Load Button (Image 2 fix) */
+select[name="class_id"] {
+  width: auto;
+  min-width: 240px;
+  max-width: 360px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 12px;
+  margin-bottom: 12px;
+}
+
+button[value="load"] {
+  vertical-align: middle;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 600px) {
+  select[name="class_id"] {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+  }
+
+  button[value="load"] {
+    width: 100%;
+  }
+}
+
+/* Primary Button */
+button,
+input[type="submit"],
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 24px;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 6px rgba(109, 94, 252, 0.25);
+  text-decoration: none;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  vertical-align: middle;
+}
+
+button:hover,
+input[type="submit"]:hover,
+.btn-primary:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(109, 94, 252, 0.35);
+}
+
+button:active,
+input[type="submit"]:active,
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button (Outlined) */
+button[type="reset"],
+.btn-secondary,
+button.btn-secondary {
+  background: var(--surface);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-left: 8px;
+}
+
+button[type="reset"]:hover,
+.btn-secondary:hover,
+button.btn-secondary:hover {
+  background: var(--bg);
+  border-color: #cbd5e1;
+  color: var(--text-main);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Login Page Container Framing */
+body.login-page {
+  max-width: 480px;
+  margin: 60px auto;
+  padding: 40px;
+}
+
+body.login-page form {
+  margin-top: 24px;
+}
+
+body.login-page button[type="submit"] {
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Error / Alert Styling
+   -------------------------------------------------------------------------- */
+p.error,
+.error {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.06);
+}
+
+p.error::before,
+.error::before {
+  content: "⚠️";
+  font-size: 1rem;
+}
+
+/* Hub Action Links / Buttons */
+a.action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  margin: 4px 6px 4px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-weight: 500;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.18s ease;
+}
+
+a.action-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   7. Home Page / Landing Page Aesthetics
+   -------------------------------------------------------------------------- */
+body.landing {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.landing-wrapper {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Floating Blurred Glow Blobs */
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+.glow-blob-1 {
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 620px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(109, 94, 252, 0.2) 0%, rgba(238, 235, 255, 0.55) 50%, transparent 75%);
+  animation: floatBlob 16s ease-in-out infinite alternate;
+}
+
+.glow-blob-2 {
+  top: 180px;
+  right: 5%;
+  width: 480px;
+  height: 380px;
+  background: radial-gradient(circle, rgba(109, 94, 252, 0.14) 0%, rgba(199, 210, 254, 0.3) 50%, transparent 75%);
+  animation: floatBlob 20s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floatBlob {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(25px, -25px) scale(1.06); }
+  100% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* Top Navigation Bar */
+.top-nav {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 22px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(229, 231, 235, 0.85);
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04);
+  margin-top: 16px;
+  margin-bottom: 28px;
+}
+
+/* Modern CampusHub Brand & Logo */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-main);
+  letter-spacing: -0.03em;
+  transition: opacity 0.18s ease;
+}
+
+.brand:hover {
+  opacity: 0.92;
+}
+
+.brand-text {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.brand-accent {
+  color: var(--accent);
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #6d5efc 0%, #4f46e5 100%);
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(109, 94, 252, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.brand:hover .brand-logo {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(109, 94, 252, 0.45);
+}
+
+/* Pure CSS Mortarboard / Graduation Cap */
+.brand-cap {
+  position: relative;
+  width: 22px;
+  height: 16px;
+  display: block;
+}
+
+/* Diamond Mortarboard Top */
+.brand-cap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 10px;
+  background: #ffffff;
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Skull Cap Base + Tassel */
+.brand-cap::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 11px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 0 0 6px 6px;
+  box-shadow: 5px -3px 0 -2px #ffffff;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link {
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* --------------------------------------------------------------------------
+   8. Hero & Portals Section (Portals First Thing on Entry)
+   -------------------------------------------------------------------------- */
+.hero-section {
+  text-align: center;
+  padding: 44px 0 64px 0;
+}
+
+/* Staggered load animation */
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-item {
+  opacity: 0;
+  animation: heroFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-badge { animation-delay: 0.05s; }
+.hero-headline { animation-delay: 0.12s; }
+.hero-subheading { animation-delay: 0.20s; }
+.hero-portals { animation-delay: 0.28s; }
+
+/* Pill Badge */
+.pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(109, 94, 252, 0.2);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  box-shadow: 0 1px 3px rgba(109, 94, 252, 0.08);
+  margin-bottom: 20px;
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(109, 94, 252, 0.25);
+}
+
+/* Headline */
+.hero-headline {
+  font-size: clamp(2.3rem, 5.5vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  color: var(--text-main);
+  max-width: 840px;
+  margin: 0 auto 18px auto;
+}
+
+.accent-word {
+  color: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+/* Subheading */
+.hero-subheading {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin: 0 auto 36px auto;
+}
+
+/* --------------------------------------------------------------------------
+   9. Access Portals Grid (Prominent Hero Cards)
+   -------------------------------------------------------------------------- */
+.portals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  text-align: left;
+}
+
+a.portal-card,
+a.portal-card.action-link,
+.portal-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 32px 28px !important;
+  background: var(--surface);
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  border-radius: var(--radius);
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+a.portal-card:hover,
+.portal-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+
+.portal-card-header {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  margin-bottom: 22px !important;
+}
+
+.portal-icon-wrapper {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(109, 94, 252, 0.12);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.portal-card:hover .portal-icon-wrapper {
+  transform: scale(1.08);
+}
+
+.portal-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+  font-size: 0; /* hides raw OS emojis completely */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* Student Portal SVG Icon: Graduation Cap */
+.portal-student .portal-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 10v6M2 10l10-5 10 5-10 5z'/%3E%3Cpath d='M6 12v5c3 3 9 3 12 0v-5'/%3E%3C/svg%3E");
+}
+
+/* Faculty Portal SVG Icon: Open Academic Book */
+.portal-faculty .portal-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'/%3E%3Cpath d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'/%3E%3C/svg%3E");
+}
+
+/* Admin Portal SVG Icon: Landmark University Building */
+.portal-admin .portal-icon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 22h18'/%3E%3Cpath d='M6 18v-7'/%3E%3Cpath d='M10 18v-7'/%3E%3Cpath d='M14 18v-7'/%3E%3Cpath d='M18 18v-7'/%3E%3Cpath d='m2 7 10-5 10 5v2H2z'/%3E%3Cpath d='M4 18h16'/%3E%3C/svg%3E");
+}
+
+.portal-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 5px 14px;
+  background: #f1f5f9;
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  transition: all 0.18s ease;
+  margin-left: auto;
+}
+
+.portal-card:hover .portal-badge {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.portal-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.portal-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--text-main);
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.portal-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.portal-footer {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+.portal-cta {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--accent);
+  transition: color 0.18s ease;
+}
+
+.portal-arrow {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.portal-card:hover .portal-arrow {
+  transform: translateX(6px);
+}
+
+/* --------------------------------------------------------------------------
+   10. Feature Cards Section (After Portals)
+   -------------------------------------------------------------------------- */
+.features-section {
+  padding: 64px 0 48px 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-header {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 44px auto;
+}
+
+.section-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, border-color 0.18s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(109, 94, 252, 0.3);
+}
+
+.feature-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0; /* hides raw OS emojis */
+  margin-bottom: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px 24px;
+  box-shadow: 0 2px 6px rgba(109, 94, 252, 0.08);
+}
+
+/* 1. Attendance tracking: Calendar */
+.feature-card:nth-child(1) .feature-icon-box {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='4' rx='2' ry='2'/%3E%3Cline x1='16' x2='16' y1='2' y2='6'/%3E%3Cline x1='8' x2='8' y1='2' y2='6'/%3E%3Cline x1='3' x2='21' y1='10' y2='10'/%3E%3C/svg%3E");
+}
+
+/* 2. Marks & results: Bar Chart */
+.feature-card:nth-child(2) .feature-icon-box {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' x2='18' y1='20' y2='10'/%3E%3Cline x1='12' x2='12' y1='20' y2='4'/%3E%3Cline x1='6' x2='6' y1='20' y2='14'/%3E%3C/svg%3E");
+}
+
+/* 3. Assignments: Document / Clipboard */
+.feature-card:nth-child(3) .feature-icon-box {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' x2='8' y1='13' y2='13'/%3E%3Cline x1='16' x2='8' y1='17' y2='17'/%3E%3C/svg%3E");
+}
+
+/* 4. Fee management: Credit Card */
+.feature-card:nth-child(4) .feature-icon-box {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='20' height='14' x='2' y='5' rx='2'/%3E%3Cline x1='2' x2='22' y1='10' y2='10'/%3E%3C/svg%3E");
+}
+
+/* 5. Student and faculty management: Users */
+.feature-card:nth-child(5) .feature-icon-box {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M22 21v-2a4 4 0 0 0-3-3.87'/%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'/%3E%3C/svg%3E");
+}
+
+/* 6. Role-based access: Shield Lock */
+.feature-card:nth-child(6) .feature-icon-box {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236d5efc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+}
+
+.feature-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.feature-desc {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   11. "Built With" Tech Section
+   -------------------------------------------------------------------------- */
+.tech-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 44px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 44px 0;
+}
+
+.tech-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tech-pill {
+  padding: 6px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.18s ease;
+}
+
+.tech-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   11.5. About Section (Enhanced Visibility & Elevated Visual Hierarchy)
+   -------------------------------------------------------------------------- */
+.about-section {
+  padding: 76px 0 64px 0;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 60px;
+}
+
+.about-card {
+  max-width: 860px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #ffffff 0%, #faf9fe 100%);
+  border: 1px solid rgba(109, 94, 252, 0.2);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 44px 48px;
+  box-shadow: 0 16px 42px -6px rgba(109, 94, 252, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-card::before {
+  content: "CREATOR & BACKGROUND";
+  display: inline-block;
+  padding: 5px 14px;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  border: 1px solid rgba(109, 94, 252, 0.18);
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  margin-bottom: 16px;
+}
+
+.about-title {
+  font-size: clamp(1.85rem, 3.2vw, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--text-main);
+  margin-bottom: 18px;
+}
+
+.about-desc {
+  font-size: 1.12rem;
+  line-height: 1.78;
+  color: #1f2937;
+  margin-bottom: 28px;
+}
+
+.about-desc strong {
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
+.about-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: var(--radius-full);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: #ffffff !important;
+  background: var(--accent) !important;
+  border: 1px solid var(--accent);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(109, 94, 252, 0.28);
+}
+
+.about-link::before {
+  content: "";
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.25c-.96 0-1.74.78-1.74 1.75a1.75 1.75 0 0 0 1.74 1.75c.97 0 1.75-.79 1.75-1.75 0-.97-.78-1.75-1.75-1.75Z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.about-link::after {
+  content: "↗";
+  font-size: 1rem;
+  font-weight: 700;
+  transition: transform 0.18s ease;
+}
+
+.about-link:hover {
+  background: var(--accent-dark) !important;
+  border-color: var(--accent-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(109, 94, 252, 0.38);
+}
+
+.about-link:hover::after {
+  transform: translate(2px, -2px);
+}
+
+/* --------------------------------------------------------------------------
+   12. Footer
+   -------------------------------------------------------------------------- */
+.landing-footer {
+  text-align: center;
+  padding: 40px 0 32px 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   12.5. Dashboard Hub & Command Center Grid
+   -------------------------------------------------------------------------- */
+body.dashboard-page {
+  max-width: 1100px;
+  padding: 40px 48px;
+}
+
+body.dashboard-page .welcome-heading {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+body.dashboard-page.faculty .welcome-heading::before {
+  content: "🧑‍🏫";
+  font-size: 2.2rem;
+  width: 56px;
+  height: 56px;
+  background: var(--accent-soft);
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(109, 94, 252, 0.12);
+  flex-shrink: 0;
+}
+
+body.dashboard-page.student .welcome-heading::before {
+  content: "🎓";
+  font-size: 2.2rem;
+  width: 56px;
+  height: 56px;
+  background: var(--accent-soft);
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(109, 94, 252, 0.12);
+  flex-shrink: 0;
+}
+
+body.dashboard-page.admin .welcome-heading::before {
+  content: "🏛️";
+  font-size: 2.2rem;
+  width: 56px;
+  height: 56px;
+  background: var(--accent-soft);
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(109, 94, 252, 0.12);
+  flex-shrink: 0;
+}
+
+/* User Role / Session Pill Badge */
+body.dashboard-page .role-id {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+body.dashboard-page .role-id::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+}
+
+/* Grid Transformation for Dashboard Navigation */
+body.dashboard-page nav.dashboard-hub {
+  position: static !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 0 16px 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)) !important;
+  gap: 20px !important;
+}
+
+body.dashboard-page nav.dashboard-hub::before {
+  content: "Dashboard Modules & Quick Actions";
+  grid-column: 1 / -1;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+
+/* Individual Dashboard Hub Cards */
+body.dashboard-page nav.dashboard-hub a.hub-card,
+body.dashboard-page a.hub-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 24px;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  min-height: 145px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+}
+
+body.dashboard-page nav.dashboard-hub a.hub-card:hover,
+body.dashboard-page a.hub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+  background: #ffffff;
+  color: var(--accent) !important;
+}
+
+/* Icons */
+body.dashboard-page a.hub-profile::before { content: "👤"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-attendance::before { content: "📅"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-assignments::before { content: "📝"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-marks::before { content: "📊"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-subjects::before { content: "📚"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-security::before { content: "🔐"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-subject::before { content: "📖"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-fees::before { content: "💳"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-students::before { content: "🎓"; font-size: 2rem; margin-bottom: 12px; display: block; }
+body.dashboard-page a.hub-faculty::before { content: "🧑‍🏫"; font-size: 2rem; margin-bottom: 12px; display: block; }
+
+/* Subtitles / Descriptions */
+body.dashboard-page a.hub-profile::after { content: "View personal profile, contact information, and department details"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-attendance::after { content: "Record, monitor, and inspect student class attendance records"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-assignments::after { content: "Create new assignments, post homework, and track submission deadlines"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-marks::after { content: "Enter, update, and publish midsem, internal, and endsem examination scores"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-subjects::after { content: "Review allocated semester curriculum and enrolled subject details"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-security::after { content: "Update security credentials and manage account password"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-subject::after { content: "Add new academic course subjects, curriculum codes, and credits"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-fees::after { content: "Monitor student tuition payments, fee records, and pending dues"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-students::after { content: "Add, update, search, and manage registered student directory"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+body.dashboard-page a.hub-faculty::after { content: "Add, update, search, and manage academic faculty staff directory"; font-size: 0.88rem; font-weight: 400; color: var(--text-muted); margin-top: 6px; line-height: 1.45; }
+
+/* Dedicated Logout Tile on Dashboard */
+body.dashboard-page a.hub-logout {
+  background: #fffafa !important;
+  border-color: #fee2e2 !important;
+  color: #dc2626 !important;
+}
+
+body.dashboard-page a.hub-logout::before {
+  content: "🚪";
+  font-size: 2rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+body.dashboard-page a.hub-logout::after {
+  content: "Safely end your current session and return to campus home";
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: #991b1b;
+  margin-top: 6px;
+  line-height: 1.45;
+}
+
+body.dashboard-page a.hub-logout:hover {
+  background: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+  color: #b91c1c !important;
+  box-shadow: 0 10px 25px -4px rgba(220, 38, 38, 0.12) !important;
+}
+
+/* Hide redundant duplicate admin links below dashboard hub */
+body.admin.dashboard-page .admin-section-heading,
+body.admin.dashboard-page .admin-section-heading ~ a.action-link,
+body.admin.dashboard-page .admin-section-heading ~ br {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   12.6. Sub-Management Hubs (Student & Faculty Management Command Hubs)
+   -------------------------------------------------------------------------- */
+body.hub-page {
+  max-width: 1100px;
+  min-height: 560px;
+  padding: 44px 48px 52px 48px;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 24px !important;
+  align-items: stretch !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Atmospheric subtle background decoration on hub pages */
+body.hub-page::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(109, 94, 252, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Hide line breaks in grid layout */
+body.hub-page > br {
+  display: none !important;
+}
+
+/* Back navigation pill / breadcrumb */
+body.hub-page > .back-link,
+body.hub-page > nav.back-nav,
+body.hub-page > nav {
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 4px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  position: static !important;
+}
+
+body.hub-page .back-link,
+body.hub-page nav a {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 18px !important;
+  background: #f1f5f9 !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-full) !important;
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  color: var(--text-muted) !important;
+  text-decoration: none !important;
+  transition: all 0.18s ease !important;
+  width: fit-content !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+body.hub-page .back-link::before,
+body.hub-page nav a::before {
+  content: "←";
+  font-size: 1.1rem;
+  transition: transform 0.18s ease;
+}
+
+body.hub-page .back-link:hover,
+body.hub-page nav a:hover {
+  background: var(--accent-soft) !important;
+  color: var(--accent) !important;
+  border-color: rgba(109, 94, 252, 0.3) !important;
+  transform: translateX(-3px) !important;
+}
+
+body.hub-page .back-link:hover::before,
+body.hub-page nav a:hover::before {
+  transform: translateX(-3px);
+}
+
+/* Hub Title & Subtitle */
+body.hub-page .hub-title,
+body.hub-page h1 {
+  grid-column: 1 / -1 !important;
+  font-size: 2.3rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.035em !important;
+  color: var(--text-main) !important;
+  margin-bottom: 2px !important;
+  margin-top: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+body.hub-page.student-hub .hub-title::before,
+body.hub-page.student-hub h1::before {
+  content: "🎓";
+  font-size: 2rem;
+  width: 54px;
+  height: 54px;
+  background: var(--accent-soft);
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(109, 94, 252, 0.15);
+  flex-shrink: 0;
+}
+
+body.hub-page.faculty-hub .hub-title::before,
+body.hub-page.faculty-hub h1::before {
+  content: "🧑‍🏫";
+  font-size: 2rem;
+  width: 54px;
+  height: 54px;
+  background: var(--accent-soft);
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(109, 94, 252, 0.15);
+  flex-shrink: 0;
+}
+
+body.hub-page .hub-subtitle,
+body.hub-page h3 {
+  grid-column: 1 / -1 !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  color: var(--text-muted) !important;
+  margin-bottom: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+body.hub-page .hub-subtitle::after,
+body.hub-page h3::after {
+  content: "Admin Actions";
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 12px;
+  background: #f1f5f9;
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+}
+
+/* Action Cards */
+body.hub-page a.hub-action-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius) !important;
+  padding: 34px 28px 30px 28px !important;
+  box-shadow: var(--shadow-sm) !important;
+  text-decoration: none !important;
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 250px !important;
+  box-sizing: border-box !important;
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.025em !important;
+  color: var(--text-main) !important;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease, border-color 0.22s ease !important;
+  margin: 0 !important;
+}
+
+body.hub-page a.hub-action-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: var(--shadow-hover) !important;
+}
+
+/* Icon Box inside Action Cards */
+body.hub-page a.hub-action-card::before {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  font-size: 1.85rem;
+  margin-bottom: 20px;
+  transition: transform 0.2s ease;
+}
+
+body.hub-page a.hub-action-card:hover::before {
+  transform: scale(1.08);
+}
+
+/* 1. Add Card (Purple / Primary) */
+body.hub-page a.card-add-student,
+body.hub-page a.card-add-faculty {
+  border-top: 4px solid var(--accent) !important;
+}
+
+body.hub-page a.card-add-student::before,
+body.hub-page a.card-add-faculty::before {
+  content: "➕";
+  background: var(--accent-soft);
+  box-shadow: 0 4px 12px rgba(109, 94, 252, 0.16);
+}
+
+body.hub-page a.card-add-student:hover,
+body.hub-page a.card-add-faculty:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+body.hub-page a.card-add-student::after {
+  content: "Register a new student, assign student ID, allocate class and department curriculum details.";
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-top: 12px;
+  flex-grow: 1;
+}
+
+body.hub-page a.card-add-faculty::after {
+  content: "Onboard new faculty member, assign employee ID, designate department, and grant system access.";
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-top: 12px;
+  flex-grow: 1;
+}
+
+/* 2. Delete Card (Crimson / Alert) */
+body.hub-page a.card-delete-student,
+body.hub-page a.card-delete-faculty {
+  border-top: 4px solid #ef4444 !important;
+}
+
+body.hub-page a.card-delete-student::before,
+body.hub-page a.card-delete-faculty::before {
+  content: "🗑️";
+  background: #fef2f2;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.14);
+}
+
+body.hub-page a.card-delete-student:hover,
+body.hub-page a.card-delete-faculty:hover {
+  border-color: #ef4444 !important;
+  color: #dc2626 !important;
+}
+
+body.hub-page a.card-delete-student::after {
+  content: "Remove student record from active registry and unenroll from all registered course subjects.";
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-top: 12px;
+  flex-grow: 1;
+}
+
+body.hub-page a.card-delete-faculty::after {
+  content: "Deactivate faculty profile, remove teaching allocations, and revoke department permissions.";
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-top: 12px;
+  flex-grow: 1;
+}
+
+/* 3. View Card (Emerald / Directory) */
+body.hub-page a.card-view-students,
+body.hub-page a.card-view-faculty {
+  border-top: 4px solid #10b981 !important;
+}
+
+body.hub-page a.card-view-students::before,
+body.hub-page a.card-view-faculty::before {
+  content: "📋";
+  background: #ecfdf5;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.14);
+}
+
+body.hub-page a.card-view-students:hover,
+body.hub-page a.card-view-faculty:hover {
+  border-color: #10b981 !important;
+  color: #059669 !important;
+}
+
+body.hub-page a.card-view-students::after {
+  content: "Search, filter, view comprehensive student profiles, academic status, contact, and enrollment data.";
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-top: 12px;
+  flex-grow: 1;
+}
+
+body.hub-page a.card-view-faculty::after {
+  content: "Browse full faculty staff directory, contact info, assigned courses, designations, and profiles.";
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin-top: 12px;
+  flex-grow: 1;
+}
+
+/* Helpful Guidance Card at Bottom */
+body.student-hub::after {
+  grid-column: 1 / -1 !important;
+  content: "💡 Tip: Enrolling new students will automatically assign student IDs and generate their academic profile. Ensure all department codes and semester data match university records before submitting.";
+  margin-top: 16px;
+  padding: 20px 24px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(109, 94, 252, 0.2);
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  color: var(--accent-dark);
+  line-height: 1.6;
+}
+
+body.faculty-hub::after {
+  grid-column: 1 / -1 !important;
+  content: "💡 Tip: Registered faculty members receive immediate access to attendance records, marksheets, and course assignment publishing. Contact university IT for role escalation.";
+  margin-top: 16px;
+  padding: 20px 24px;
+  background: var(--accent-soft);
+  border: 1px solid rgba(109, 94, 252, 0.2);
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  color: var(--accent-dark);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsiveness (Down to 360px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  body:not(.landing) {
+    margin: 16px 12px;
+    padding: 24px 16px;
+    border-radius: 12px;
+  }
+
+  body.dashboard-page {
+    margin: 16px 12px;
+    padding: 24px 18px;
+  }
+
+  body.dashboard-page .welcome-heading {
+    font-size: 1.7rem;
+  }
+
+  body.dashboard-page nav.dashboard-hub {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.hub-page {
+    grid-template-columns: 1fr !important;
+    padding: 28px 20px !important;
+    gap: 16px !important;
+  }
+
+  body.hub-page .hub-title,
+  body.hub-page h1 {
+    font-size: 1.75rem !important;
+  }
+
+  body.hub-page a.hub-action-card {
+    min-height: auto !important;
+    padding: 24px 20px !important;
+  }
+
+  body.login-page {
+    margin: 24px 12px;
+    padding: 24px 18px;
+  }
+
+  .top-nav {
+    padding: 10px 16px;
+  }
+
+  .hero-headline {
+    font-size: 2.2rem;
+  }
+
+  .portals-grid,
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Accessibility: Prefers Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .glow-blob {
+    animation: none !important;
+  }
+
+  .hero-item {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
