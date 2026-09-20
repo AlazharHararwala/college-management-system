@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="student">
+    <nav>
+        <a href="{{ url_for('student_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('student_profile' ) }}">Profile</a>
+        <a href="{{ url_for('student_subjects' ) }}">Subjects</a>
+        <a href="{{ url_for('student_attendance' ) }}">Attendance</a>
+        <a href="{{ url_for('student_marks' ) }}">Marks</a>
+        <a href="{{ url_for('student_logout' ) }}">Logout</a>
+    </nav>
+
+    <h1>My Assignments</h1>
+    <h3>{{student.full_name}}</h3>
+    <h4>ID: {{student.student_id}}</h4>
+
+    <table border="2">
+        <thead>
+            <tr>
+                <th>Subject code</th>
+                <th>Subject name</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Due Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for assignments in assignment %}
+            <tr>
+                <td>{{assignments.subject_code}}</td>
+                <td>{{assignments.subject_name}}</td>
+                <td>{{assignments.title}}</td>
+                <td>{{assignments.description}}</td>
+                <td>{{assignments.due_date}}</td>  
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

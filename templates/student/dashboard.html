@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="student dashboard-page">
+    <h2 class="welcome-heading">Welcome <i><b>{{student.full_name}}</b></i></h2>
+    <h3 class="role-id">Student ID: {{student.student_id}}</h3>
+
+    <nav class="dashboard-hub">
+        <a href="{{ url_for('student_profile' ) }}" class="hub-card hub-profile">Profile</a>
+        <a href="{{ url_for('student_subjects' ) }}" class="hub-card hub-subjects">Subjects</a>
+        <a href="{{ url_for('student_attendance' ) }}" class="hub-card hub-attendance">Attendance</a>
+        <a href="{{ url_for('student_marks' ) }}" class="hub-card hub-marks">Marks</a>
+        <a href="{{ url_for('student_assignments' ) }}" class="hub-card hub-assignments">Assignments</a>
+        <a href="{{ url_for('student_change_password' ) }}" class="hub-card hub-security"> Change Password</a>
+        <a href="{{ url_for('student_logout' ) }}" class="hub-card hub-logout">Logout</a>
+        
+    </nav>
+</body>
+</html>

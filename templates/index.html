@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusHub · College Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="home-page landing">
+    <!-- Atmospheric background glowing blobs -->
+    <div class="glow-blob glow-blob-1" aria-hidden="true"></div>
+    <div class="glow-blob glow-blob-2" aria-hidden="true"></div>
+
+    <div class="landing-wrapper">
+        <!-- Top Navigation Bar (Sign-in button removed, new modern logo) -->
+        <header class="top-nav">
+            <a href="#" class="brand">
+                <span class="brand-logo" aria-hidden="true">
+                    <span class="brand-cap"></span>
+                </span>
+                <span class="brand-text">Campus<span class="brand-accent">Hub</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="#portals" class="nav-link">Portals</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#about" class="nav-link">About</a>
+            </nav>
+        </header>
+
+        <!-- Hero & Portals Section (Portals are the first thing user sees) -->
+        <main class="hero-section" id="portals">
+            <div class="pill-badge hero-item hero-badge">
+                <span class="badge-dot"></span>
+                <span>Student · Faculty · Admin portals</span>
+            </div>
+
+            <h1 class="hero-headline hero-item">Your campus, organised in <span class="accent-word">one place</span></h1>
+
+            <p class="hero-subheading hero-item">Select your portal below to access attendance, marks, assignments, and college records.</p>
+
+            <!-- Portals Grid: Front & Center -->
+            <div class="portals-grid hero-item hero-portals">
+                <a href="{{ url_for('student_login') }}" class="portal-card portal-student action-link card-student">
+                    <div class="portal-card-header">
+                        <div class="portal-icon-wrapper">
+                            <span class="portal-icon">🎓</span>
+                        </div>
+                        <span class="portal-badge">Student</span>
+                    </div>
+                    <div class="portal-info">
+                        <h2 class="portal-title">Student Portal</h2>
+                        <p class="portal-desc">View enrolled subjects, monitor attendance percentage, check examination marks, and track assignment deadlines.</p>
+                    </div>
+                    <div class="portal-footer">
+                        <span class="portal-cta">Enter Student Portal</span>
+                        <span class="portal-arrow">→</span>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('faculty_login') }}" class="portal-card portal-faculty action-link card-faculty">
+                    <div class="portal-card-header">
+                        <div class="portal-icon-wrapper">
+                            <span class="portal-icon">🧑‍🏫</span>
+                        </div>
+                        <span class="portal-badge">Faculty</span>
+                    </div>
+                    <div class="portal-info">
+                        <h2 class="portal-title">Faculty Portal</h2>
+                        <p class="portal-desc">Manage class attendance entries, publish student examination marks, and post coursework assignments.</p>
+                    </div>
+                    <div class="portal-footer">
+                        <span class="portal-cta">Enter Faculty Portal</span>
+                        <span class="portal-arrow">→</span>
+                    </div>
+                </a>
+
+                <a href="{{ url_for('admin_login') }}" class="portal-card portal-admin action-link card-admin">
+                    <div class="portal-card-header">
+                        <div class="portal-icon-wrapper">
+                            <span class="portal-icon">🏛️</span>
+                        </div>
+                        <span class="portal-badge">Admin</span>
+                    </div>
+                    <div class="portal-info">
+                        <h2 class="portal-title">Admin Portal</h2>
+                        <p class="portal-desc">Administer student and faculty records, manage academic subjects, and oversee fee statuses.</p>
+                    </div>
+                    <div class="portal-footer">
+                        <span class="portal-cta">Enter Admin Portal</span>
+                        <span class="portal-arrow">→</span>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <!-- Feature Cards Section (Placed after the portals) -->
+        <section class="features-section" id="features">
+            <div class="section-header">
+                <span class="section-badge">Capabilities</span>
+                <h2 class="section-title">Designed for modern academia</h2>
+                <p class="section-subtitle">Everything instructors, learners, and administrators need without friction.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-box">📅</div>
+                    <h3 class="feature-title">Attendance tracking</h3>
+                    <p class="feature-desc">Faculty mark attendance per class; students see their percentage per subject.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">📊</div>
+                    <h3 class="feature-title">Marks and results</h3>
+                    <p class="feature-desc">Faculty enter midsem, internal and endsem marks; students view them.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">📝</div>
+                    <h3 class="feature-title">Assignments</h3>
+                    <p class="feature-desc">Faculty create assignments; students see due dates.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">💳</div>
+                    <h3 class="feature-title">Fee management</h3>
+                    <p class="feature-desc">Admins track paid and unpaid fees per student.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">👥</div>
+                    <h3 class="feature-title">Student and faculty management</h3>
+                    <p class="feature-desc">Admins add, update, view and delete records.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-box">🔐</div>
+                    <h3 class="feature-title">Role-based access</h3>
+                    <p class="feature-desc">Separate portals for students, faculty and admins, with hashed passwords.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Built With Section -->
+        <section class="tech-section">
+            <span class="tech-label">Built with</span>
+            <div class="tech-pills">
+                <span class="tech-pill">Python</span>
+                <span class="tech-pill">Flask</span>
+                <span class="tech-pill">SQLAlchemy</span>
+                <span class="tech-pill">MySQL</span>
+                <span class="tech-pill">Jinja2</span>
+                <span class="tech-pill">HTML5</span>
+                <span class="tech-pill">CSS3</span>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+            <div class="about-card">
+                <h2 class="about-title">About this project</h2>
+                <p class="about-desc">CampusHub is a college management system I built to learn how backend and frontend technologies fit together: Flask routing and sessions, SQLAlchemy models on MySQL, and Jinja templates for student, faculty and admin portals. It is a learning project, not a production system. Built by <strong>Alazhar Hararwala</strong>.</p>
+                <div class="about-links">
+                    <a href="https://www.linkedin.com/in/al-azhar-hararwala-091a02370" target="_blank" rel="noopener noreferrer" class="about-link">LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="landing-footer">
+            <p>CampusHub · College Management System · A learning project</p>
+        </footer>
+    </div>
+</body>
+</html>

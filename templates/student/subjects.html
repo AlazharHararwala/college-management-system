@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subjects</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="student">
+    <nav>
+        <a href="{{ url_for('student_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('student_profile' ) }}">Profile</a>
+        <a href="{{ url_for('student_attendance' ) }}">Attendance</a>
+        <a href="{{ url_for('student_marks' ) }}">Marks</a>
+        <a href="{{ url_for('student_assignments' ) }}">Assignments</a>
+        <a href="{{ url_for('student_logout' ) }}">Logout</a>
+    </nav>
+
+    <h1>My Subjects</h1>
+
+    <h3>{{student.full_name}}</h3>
+    <h4>ID: {{student.student_id}}</h4>
+    <p>Your Subjects for the Sem <b>{{student.semester}}</b> are</p>
+    <table border="2">
+    <thead>
+        <tr>
+            <th>Subject Code</th>
+            <th>Subject Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for subject in subjects %}
+        <tr>
+            <td>{{ subject.subject_code }}</td>
+            <td>{{ subject.subject_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

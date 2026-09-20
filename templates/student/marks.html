@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="student">
+    <nav>
+        <a href="{{ url_for('student_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('student_profile' ) }}">Profile</a>
+        <a href="{{ url_for('student_subjects' ) }}">Subjects</a>
+        <a href="{{ url_for('student_attendance' ) }}">Attendance</a>
+        <a href="{{ url_for('student_assignments' ) }}">Assignments</a>
+        <a href="{{ url_for('student_logout' ) }}">Logout</a>
+    </nav>
+
+    <h1>Marks</h1>
+
+    <h3>{{student.full_name}}</h3>
+    <h4>ID: {{student.student_id}}</h4>
+
+    <table border="2">
+        <thead>
+            <tr>
+                <th>Subjects</th>
+                <th>Midsem marks</th>
+                <th>Endsem marks</th>
+                <th>Internal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in marks %}
+            <tr>
+                <td>{{ result.subject_name }}</td>
+                <td>{{ result.midsem_marks }}</td>
+                <td>{{ result.endsem_marks }}</td>
+                <td>{{ result.internal_marks }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

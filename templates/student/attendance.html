@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="student">
+    <nav>
+        <a href="{{ url_for('student_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('student_profile' ) }}">Profile</a>
+        <a href="{{ url_for('student_subjects' ) }}">Subjects</a>
+        <a href="{{ url_for('student_marks' ) }}">Marks</a>
+        <a href="{{ url_for('student_assignments' ) }}">Assignments</a>
+        <a href="{{ url_for('student_logout' ) }}">Logout</a>
+    </nav>
+
+
+    <h1>Attendance</h1>
+
+    <h3>{{ student.full_name }}</h3>
+    <h4>ID: {{student.student_id}}</h4>
+    <table border="2">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Total Classes</th>
+                <th>Attended Classes</th>
+                <th>Absent Classes</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for record in attendance_data%}
+            <tr>
+                <td>{{ record.subject_name }}</td>
+                <td>{{record.total_classes }}</td>
+                <td>{{record.attended_classes}}</td>
+                <td>{{record.absent_classes}}</td>
+                <td>{{"%.2f"|format(record.percentage)}}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
