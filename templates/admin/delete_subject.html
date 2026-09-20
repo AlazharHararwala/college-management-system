@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Subject</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin">
+    <nav>
+        <a href="{{ url_for('admin_profile' ) }}">Profile</a>
+        <a href="{{ url_for('add_subject' ) }}">Add Subject</a>
+        <a href="{{ url_for('admin_logout' ) }}">Logout</a>
+    </nav>
+
+    <h1>Delete Subject</h1>
+
+    <form action="{{ url_for('delete_subject' ) }}" method="post">
+    
+        <label for="subject_code">Subject Code</label>
+        <input type="text" name="subject_code" required><br><br>
+
+        <button type="submit" name="action" value="delete">Delete subject</button>
+
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

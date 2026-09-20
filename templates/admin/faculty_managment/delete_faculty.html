@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Faculty</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin">
+
+    <nav>
+        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('faculty_management') }}">Faculty Management</a>
+        <a href="{{ url_for('admin_logout') }}">Logout</a>
+    </nav>
+
+    <h1>Delete Faculty</h1>
+
+    
+
+    <form action="{{ url_for('delete_faculty') }}" method="POST">
+
+        <label for="faculty_id">Faculty ID</label>
+        <input type="text" name="faculty_id" id="faculty_id" required><br><br>
+
+        <label for="password">Admin Password</label>
+        <input type="password" name="password" id="password" required><br><br>
+
+        <button type="submit">Delete Faculty</button>
+
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+</body>
+</html>

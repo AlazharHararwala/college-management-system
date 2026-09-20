@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Subject</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin">
+    <nav>
+        <a href="{{ url_for('admin_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('admin_profile' ) }}">Profile</a>
+        <a href="{{ url_for('delete_subject' ) }}">Delete Subject</a>
+        <a href="{{ url_for('fees_managment' ) }}">Fees Management</a>
+        <a href="{{ url_for('admin_logout' ) }}">Logout</a>
+    </nav>
+
+    <h1>Add Subject</h1>
+
+    <form action="{{ url_for('add_subject' ) }}" method="post">
+
+        <label for="subject_code">Subject Code</label>
+        <input type="text" name="subject_code" required><br><br>
+
+        <label for="subject_name">Subject Name</label>
+        <input type="text" name="subject_name" required><br><br>
+
+        <label for="semester">Semester</label>
+        <select name="semester" id="semester">
+            <option value="" disabled selected>Select Semester</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select><br><br>
+        
+        <label for="department">Department</label>
+        <input type="text" name="department" required><br><br>
+
+        <label for="credits">Credits</label>
+        <select name="credits" id="credits">
+            <option value="" disabled selected>Select Credits</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+        </select><br><br>
+
+        <button type="submit">Add subject</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+</body>
+</html>

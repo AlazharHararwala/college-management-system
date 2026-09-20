@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin hub-page student-hub">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-link">Dashboard</a><br>
+    <h1 class="hub-title">Admin-Student Management</h1>
+    <h3 class="hub-subtitle">Choose from the following action</h3>
+    <a href="{{ url_for('add_student' ) }}" class="action-link hub-action-card card-add-student">Add Student</a>
+    <a href="{{ url_for('delete_student' ) }}" class="action-link hub-action-card card-delete-student">Delete Student</a>
+    <a href="{{ url_for('student_details' ) }}" class="action-link hub-action-card card-view-students">View Students</a>
+</body>
+</html>

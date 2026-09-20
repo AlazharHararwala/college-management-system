@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin hub-page faculty-hub">
+    <nav class="back-nav">
+    <a href="{{ url_for('admin_dashboard') }}" class="back-link">Dashboard</a><br>
+    </nav>
+    
+    <h1 class="hub-title">Admin-Faculty Management</h1>
+
+    <h3 class="hub-subtitle">Choose from the following action</h3>
+    <a href="{{ url_for('add_faculty' ) }}" class="action-link hub-action-card card-add-faculty">Add Faculty</a>
+    <a href="{{ url_for('delete_faculty' ) }}" class="action-link hub-action-card card-delete-faculty">Delete Faculty</a>
+    <a href="{{ url_for('view_faculty' ) }}" class="action-link hub-action-card card-view-faculty">View Faculty Details</a>
+</body>
+</body>
+</html>

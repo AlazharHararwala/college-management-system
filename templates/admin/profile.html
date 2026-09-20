@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin">
+    <nav>
+        <a href="{{ url_for('admin_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('add_subject' ) }}">Add Subject</a>
+        <a href="{{ url_for('fees_managment' ) }}">Fees Management</a>
+        <a href="{{ url_for('admin_logout' ) }}">Logout</a>
+    </nav>
+    
+    <h1>Your Profile</h1>
+    <table border="2" class="profile-table">
+        <tr>
+            <th>Admin ID:</th>
+            <td>{{admin.admin_id}}</td>
+        </tr>
+
+        <tr>
+            <th>Full Name</th>
+            <td>{{admin.full_name}}</td>
+        </tr>
+
+        <tr>
+            <th>Email</th>
+            <td>{{admin.email}}</td>
+        </tr>
+
+        <tr>
+            <th>Gender</th>
+            <td>{{admin.gender}}</td>
+        </tr>
+
+        <tr>
+            <th>Contact</th>
+            <td>{{admin.phone}}</td>
+        </tr>
+
+        <tr>
+            <th>Date Of Birth</th>
+            <td>{{admin.date_of_birth}}</td>
+        </tr>
+    </table>
+</body>
+</html>

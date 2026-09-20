@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin">
+    <nav>
+        <a href="{{ url_for('admin_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('admin_profile' ) }}">Profile</a>
+        <a href="{{ url_for('add_subject' ) }}">Add Subject</a>
+        <a href="{{ url_for('update_fees' ) }}">Update fees</a>
+        <a href="{{ url_for('admin_logout' ) }}">Logout</a>
+    </nav><br><br>
+
+    <form action="{{ url_for('fees_managment' ) }}" method="post">
+
+        <label for="student_id">Student ID</label>
+        <input type="text" name="student_id"><br><br>
+
+        <label for="class_id">Class ID</label>
+        <input type="text" name="class_id"><br><br>
+
+        <label for="semester">Semester</label>
+        <select name="semester" id="semester">
+            <option value="" selected>All semester</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select><br><br>
+
+        <label for="department">Department</label>
+        <input type="text" name="department"><br><br>
+
+        <label for="status">Status</label>
+        <select name="status" id="status">
+            <option value="" selected>All status</option>
+            <option value="Paid">Paid</option>
+            <option value="Unpaid">Unpaid</option>
+        </select><br><br>
+
+        <button type="submit" name="action" value="load">Load</button>
+
+    </form>
+
+    {% if fees %}
+
+    <table border="2">
+        <thead>
+            
+            <tr>
+                <th>Student ID</th>
+                <th>Student Name</th>
+                <th>Semester</th>
+                <th>Department</th>
+                <th>Total Fees</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for fee in fees %}
+            <tr>
+                <td>{{fee.student_id}}</td>
+                <td>{{fee.full_name}}</td>
+                <td>{{fee.semester}}</td>
+                <td>{{fee.department}}</td>
+                <td>{{fee.total_fees}}</td>
+                <td>{{fee.status}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        
+    {% endif %}
+</body>
+</html>

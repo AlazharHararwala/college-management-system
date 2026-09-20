@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Faculty</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin">
+    <nav>
+        <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('faculty_management' ) }}">Faculty Management</a>
+        <a href="{{ url_for('update_faculty' ) }}">Update faculty Details</a>
+        <a href="{{ url_for('admin_logout' ) }}">Logout</a>
+    </nav>
+    <h1>View Faculty Details</h1>
+    <form action="{{ url_for('view_faculty' ) }}" method="post">
+
+        <label for="faculty_id">Faculty ID</label>
+        <input type="text" name="faculty_id"><br><br>
+
+
+        <label for="department">Department</label>
+        <input type="text" name="department"><br><br>
+
+
+        <label for="gender">Gender</label>
+        <select name="gender" id="gender">
+            <option value="">All gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select><br><br>
+
+        <label for="status">Status</label>
+        <select name="status" id="status">
+            <option value="">All status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+        </select><br><br>
+
+        <label for="class_assigned">Class Assigned</label>
+        <input type="text" name="class_assigned"><br><br>
+
+        <button type="submit" name="action" value="load">Load</button>
+        <button type="submit" class="btn-secondary" name="action" value="reset">Reset</button>
+
+        </form>
+        
+
+{% if faculty %}
+    <h2>Faculties</h2>
+    <table border="2">
+
+        <thead>
+            <tr>
+                <th>Faculty ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Date Of Birth</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Department</th>
+                <th>Join Date</th>
+                <th>Status</th>
+                <th>Class Assigned</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for faculties in faculty %}
+                
+            <tr>
+                <td>{{faculties.faculty_id}}</td>
+                <td>{{faculties.full_name}}</td>
+                <td>{{faculties.email}}</td>
+                <td>{{faculties.phone}}</td>
+                <td>{{faculties.date_of_birth}}</td>
+                <td>{{faculties.gender}}</td>
+                <td>{{faculties.address}}</td>
+                <td>{{faculties.department}}</td>
+                <td>{{faculties.join_date}}</td>
+                <td>{{faculties.status}}</td>
+                <td>{{faculties.class_assigned}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</body>
+</html>

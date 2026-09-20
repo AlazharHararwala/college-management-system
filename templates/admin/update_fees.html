@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Fees</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin">
+    <nav>
+        <a href="{{ url_for('admin_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('fees_managment' ) }}">Fees Management</a>
+    </nav><br>
+
+    <form action="{{ url_for('update_fees') }}" method="post">
+
+        <label for="student_id">Student ID:</label>
+        <input type="text" name="student_id" required>
+
+        <button type="submit" name="action" value="find">
+            Find Fee Details
+        </button>
+
+    </form><br>
+
+    
+{% if error %}
+    <p class="error" style="color: red;">{{ error }}</p>
+{% endif %}
+
+{% if student %}
+
+    <h2>Student Fee Details</h2>
+
+    <form action="{{ url_for('update_fees') }}" method="post">
+
+        <label for="student_id">Student ID:</label>
+
+        <input type="text"name="student_id"value="{{ student.student_id }}"readonly>
+        <br><br>
+
+        <label for="full_name">Full Name:</label>
+
+        <input type="text"name="full_name"value="{{ student.full_name }}"readonly>
+        <br><br>
+
+        <label for="department">Department:</label>
+        <input type="text"name="department"value="{{ student.department }}"readonly>
+        <br><br>
+
+        <label for="class_id">Class ID:</label>
+        <input type="text"name="class_id"value="{{ student.class_id }}"readonly>
+        <br><br>
+
+        <label for="semester">Semester:</label>
+        <input type="text"name="semester"value="{{ student.semester }}"readonly>
+        <br><br>
+
+        <label for="total_fees">Total Fees:</label>
+        <input type="text" name="total_fees"value="{{ fees.total_fees if fees else '' }}" min="0" max="69500" required>
+        <br><br>
+
+        <label for="status">Status:</label>
+        <select name="status" required>
+            <option value="" selected disabled>Select status</option>
+            <option value="Paid">Paid</option>
+            <option value="Unpaid">Unpaid</option>
+        </select>
+        <br><br>
+
+        <button type="submit" name="action" value="update">
+
+            {% if fees %}
+                Update Fees Details
+            {% else %}
+                Add Fees
+            {% endif %}
+
+        </button>
+
+    </form>
+
+{% endif %}
+</body>
+</html>

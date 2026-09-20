@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="admin dashboard-page">
+    <h2 class="welcome-heading">Welcome <i><b>{{admin.full_name}}</b></i></h2>
+    <h3 class="role-id">ID: {{admin.admin_id}}</h3>
+
+    <nav class="dashboard-hub">
+        <a href="{{ url_for('admin_profile' ) }}" class="hub-card hub-profile">Profile</a>
+        <a href="{{ url_for('add_subject' ) }}" class="hub-card hub-subject">Add Subject</a>
+        <a href="{{ url_for('fees_managment' ) }}" class="hub-card hub-fees">Fees Management</a>
+        <a href="{{ url_for('student_management') }}" class="hub-card hub-students">Student Management</a>
+        <a href="{{ url_for('faculty_management' ) }}" class="hub-card hub-faculty">Faculty Management</a>
+        <a href="{{ url_for('admin_logout' ) }}" class="hub-card hub-logout">Logout</a>
+    </nav>
+
+    <h4 class="admin-section-heading">Choose the Management type</h4>
+    <a href="{{ url_for('student_management') }}" class="action-link">Student Management</a><br>
+    <a href="{{ url_for('faculty_management' ) }}" class="action-link">Faculty Management</a>
+
+</body>
+</html>
