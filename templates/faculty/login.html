@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="faculty login-page">
+    <nav>
+        <a href="{{ url_for('index' ) }}">Home</a>
+        <a href="{{ url_for('admin_login' ) }}">Admin Login</a>
+        <a href="{{ url_for('student_login' ) }}">Student Login</a>
+    </nav>
+    <h1>Faculty Management System</h1>
+    <h3>Faculty Login</h3>
+
+    <form action="{{ url_for('faculty_login' ) }}" method="post">
+        <label for="faculty_id">Faculty ID:</label>
+        <input type="text" name="faculty_id" id="faculty_id" required><br>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required><br>
+
+        <button type="submit">Login</button>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </form>
+
+</body>
+</html>

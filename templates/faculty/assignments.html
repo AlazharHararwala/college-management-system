@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="faculty">
+    <nav>
+        <a href="{{ url_for('faculty_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('faculty_profile' ) }}">Profile</a>
+        <a href="{{ url_for('attendance_entry' ) }}">Attendance Entry</a>
+        <a href="{{ url_for('assignment_history' ) }}">Assignment History</a>
+        <a href="{{ url_for('faculty_logout' ) }}">Logout</a>
+    </nav><br>
+
+    <form action="{{ url_for('create_assignment' ) }}" method="post">
+
+        <label>Subject Code</label>
+        <input type="text" name="subject_code" required><br><br>
+
+        <label for="">Subject Name</label>
+        <input type="text" name="subject_name" required><br><br>
+
+        <label for="">Semester</label>
+        <input type="number" name="semester"  min="1" max="8" required><br><br>
+
+        <label for="">Class ID</label>
+        <select name="class_id" id="class_id">
+            {% for class_id in class_ids %}
+                <option value="{{ class_id }}">
+                    {{ class_id }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="">Title</label>
+        <input type="text" name="title" required><br><br>
+
+        <label for="">Description</label>
+        <input type="text" name="description"><br><br>
+
+        <label for="">Due Date</label>
+        <input type="date" name="due_date" required><br><br>
+
+        <button type="submit" name="action" value="submit">Create</button>
+
+    </form>
+</body>
+</html>

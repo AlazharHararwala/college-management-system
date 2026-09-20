@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="faculty">
+    <nav>
+        <a href="{{ url_for('faculty_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('update_marks' ) }}">Enter/update marks</a>
+    </nav>
+
+    <h1>View Marks</h1>
+
+    <form action="{{ url_for('view_marks') }}" method="post">
+
+        <label for="">Choose Class ID</label>
+        <select name="class_id" id="">
+            {% for class_id in class_ids %}
+                <option value="{{class_id}}">
+                    Class {{class_id}}
+                </option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label for="">Semester</label>
+        <input type="text" name="semester" min="1" max="8" required><br><br>
+
+        <label for="">Subject Name</label>
+        <input type="text" name="subject_name"><br><br>
+
+        <button type="submit" name="action" value="load">Load students</button><br><br>
+
+        <table border="2">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Subject Name</th>
+                    <th>Midsem Marks</th>
+                    <th>Internal</th>
+                    <th>Endsem</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for mark in marks %}
+                    <tr>
+                        <td>{{mark.student_id}}</td>
+                        <td>{{mark.subject_name}}</td>
+                        <td>{{mark.midsem_marks}}</td>
+                        <td>{{mark.internal_marks}}</td>
+                        <td>{{mark.endsem_marks}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>

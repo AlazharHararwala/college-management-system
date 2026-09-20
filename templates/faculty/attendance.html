@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Entry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="faculty">
+
+    <nav>
+        <a href="{{ url_for('faculty_dashboard' ) }}">Dashboard</a>
+        <a href="{{ url_for('faculty_profile' ) }}">Profile</a>
+        <a href="{{ url_for('faculty_logout' ) }}">Logout</a>
+    </nav>
+
+    <form action="{{ url_for('attendance_entry') }}" method="POST">
+
+        <label>Assigned Class</label>
+
+       
+        <select name="class_id">
+            {% for class_id in class_ids %}
+                <option value="{{ class_id }}" {% if class_id == request.form.get('class_id') %}selected{% endif %}>
+                    {{ class_id }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" name="action" value="load">Load Students</button>
+
+        <br><br>
+
+        <label>Subject Code</label>
+        <input type="text" name="subject_code">
+
+        <br><br>
+
+        <label>Attendance Date</label>
+        <input type="date" name="attendance_date">
+
+        <br><br>
+
+        <label>Class Time</label>
+        <input type="time" name="class_time">
+
+        <br><br>
+
+        <!-- Students List -->
+
+        <table border="1">
+
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Full Name</th>
+                    <th>Class ID</th>
+                    <th>Department</th>
+                    <th>Semester</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.student_id }}</td>
+                    <td>{{ student.full_name }}</td>
+                    <td>{{ student.class_id }}</td>
+                    <td>{{ student.department }}</td>
+                    <td>{{ student.semester }}</td>
+                    <td class="status-cell">
+                        <input type="radio" name="status_{{student.student_id}}" value="present" id="present_{{ student.student_id }}" checked>
+                        <label for="present_{{ student.student_id }}">
+                            Present
+                        </label>
+
+                        <input type="radio" name="status_{{student.student_id}}" value="absent" id="absent_{{ student.student_id }}">
+                        <label for="absent_{{ student.student_id }}">
+                            Absent
+                        </label>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" name="action" value="submit">Submit Attendance</button>
+
+    </form>
+</body>
+</html>

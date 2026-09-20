@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="faculty">
+    <nav>
+        <a href="{{ url_for('create_assignment' ) }}">Create assignment</a>
+    </nav><br>
+
+    <form action="{{ url_for('assignment_history') }}" method="post">
+
+        <label for="">Class ID</label>
+        <select name="class_id" id="class_id">
+            {% for cid in class_id %}
+                <option value="{{ cid }}">
+                    {{ cid }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="">Semester</label>
+        <input type="text" name="semester" min="1" max="8" required><br><br>
+
+        <button type="submit" name="action" value="load">Load assignments</button><br><br>
+
+        <table border="2"> 
+            <thead>
+                <tr>
+                    <th>Subject Code</th>
+                    <th>Subject Name</th>
+                    <th>Semester</th>
+                    <th>Class ID</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for assignments in assignment %}
+                <tr>
+                    <td>{{assignments.subject_code}}</td>
+                    <td>{{assignments.subject_name}}</td>
+                    <td>{{assignments.semester}}</td>
+                    <td>{{assignments.class_id}}</td>
+                    <td>{{assignments.description}}</td>
+                    <td>{{assignments.due_date}}</td>
+                    <td>{{assignments.created_at}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form><br>
+
+    <form action="{{ url_for('assignment_history') }}" method="get">
+        <button type="submit" class="btn-secondary">
+            Reset
+        </button>
+    </form>
+
+    <h4>Note: Please reset the form if you want to see the assignments of a new class</h4>
+
+</body>
+</html>
